@@ -3,8 +3,16 @@ package com.linkedin.javacodechallenges;
 import java.util.List;
 
 public class App {
+
     public static double calculateAverageChangeInvested(List<Double> purchases) {
-        return 0;
+
+        return purchases.stream().mapToDouble(purchase -> {
+            int upper = purchase.intValue();
+            if (purchase - upper != 0) {
+                upper += 1;
+            }
+            return upper - purchase;
+        }).average().orElseGet(() -> 0);
     }
 
     public static void main(String[] args) {
