@@ -1,14 +1,32 @@
 package com.linkedin.javacodechallenges;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class App {
     public static List<String> findStudentsWithIncompleteVolunteerEvents(
             List<String> students,
             Map<String, List<String>> attendeesMapping) {
-        // TODO: implement function
-        return List.of();
+
+      List<String> attendees =    attendeesMapping
+                .values()
+                .stream()
+                .flatMap(Collection::stream)
+              .collect(Collectors.toList());
+
+      for(String student: students){
+          attendees.remove(student);
+      }
+
+        List<String> missingStudents = new ArrayList<>(students);
+        missingStudents.removeAll(new HashSet<>(attendees));
+        return missingStudents;
     }
 
     public static void main(String[] args) {
